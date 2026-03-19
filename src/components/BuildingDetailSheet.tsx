@@ -214,7 +214,7 @@ export function BuildingDetailSheet({ entity, onClose }: BuildingDetailSheetProp
                 activeTab === 'enterprise' ? "bg-white text-primary shadow-sm" : "text-slate-500"
               )}
             >
-              关联企业 (0)
+              关联企业 (2)
             </button>
           </div>
 
@@ -262,16 +262,46 @@ export function BuildingDetailSheet({ entity, onClose }: BuildingDetailSheetProp
               </motion.div>
             ) : (
               <motion.div 
-                key="enterprise-empty"
+                key="enterprise-list"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                className="py-12 flex flex-col items-center justify-center text-slate-300"
+                className="space-y-4"
               >
-                <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-3">
-                  <Briefcase size={32} />
-                </div>
-                <p className="text-sm font-bold">暂无关联企业</p>
+                {[
+                  { name: '深圳市白石洲实业股份合作公司', industry: '物业管理', status: '营业中', creditCode: '91440300MA5XXXXX12' },
+                  { name: '南山区创客科技工作室', industry: '软件开发', status: '营业中', creditCode: '91440300MA5YYYYY34' },
+                ].map((ent, idx) => (
+                  <div key={idx} className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm flex gap-4 hover:border-primary/20 transition-colors">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 shrink-0 border border-slate-100">
+                      <Briefcase size={28} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[16px] font-bold text-slate-900 truncate">{ent.name}</span>
+                        </div>
+                        <button 
+                          className="text-[12px] font-bold text-primary hover:underline shrink-0"
+                          onClick={() => navigate('/entity/ent-1')}
+                        >
+                          详情
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold rounded-lg border border-blue-100">
+                          {ent.industry}
+                        </span>
+                        <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] font-bold rounded-lg border border-emerald-100">
+                          {ent.status}
+                        </span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 font-mono">
+                        统一信用代码: {ent.creditCode}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </motion.div>
             )}
           </AnimatePresence>
